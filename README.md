@@ -1,69 +1,46 @@
-# React + TypeScript + Vite
+# Zustand Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Mini Zustand 구현 프로젝트입니다.
 
-Currently, two official plugins are available:
+## 🎯 목적
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Zustand의 핵심 기능인 구독 기반 상태 관리 (Publisher-Subscriber 패턴)를 직접 구현해보는 프로젝트입니다.
 
-## Expanding the ESLint configuration
+## 🛠️ 기술 스택
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 18
+- TypeScript
+- Vite
+- Custom State Management (Zustand Clone)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📦 구현 기능
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- [ ] `createStore` - 전역 상태 생성 팩토리 함수
+- [ ] `useStore` - React 컴포넌트 연동용 커스텀 훅
+- [ ] Shallow comparison을 통한 리렌더링 최적화
+- [ ] 구독 기반 상태 변경 알림
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 실행 방법
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📁 프로젝트 구조
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+/src
+├── store/
+│   ├── createStore.ts  # 핵심 store 생성 로직
+│   └── useStore.ts     # React 연동용 hook
+├── components/         # 테스트용 컴포넌트
+└── App.tsx            # 메인 앱 컴포넌트
+```
+
+## 🧱 주요 동작 흐름
+
+1. `createStore()`로 store 생성
+2. store는 내부에 상태(state)와 구독자 목록(Set<Listener>)을 가짐
+3. `setState()`를 통해 상태 변경 시 모든 listener에게 알림
+4. `useStore()`는 selector와 shallow comparison을 통해 리렌더링 최적화
