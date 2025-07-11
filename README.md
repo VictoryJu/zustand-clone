@@ -27,6 +27,7 @@ Zustand의 핵심 기능인 구독 기반 상태 관리 (Publisher-Subscriber �
 
 ### 빌드 환경 (권장)
 ```bash
+npm install
 npm run build
 npm run preview
 ```
